@@ -1,7 +1,5 @@
 'use strict';
 
-const path = require('path');
-
 const assert = require('assertthat');
 
 const httpsOrHttp = require('../../lib/httpsOrHttp');

@@ -13,6 +13,10 @@
     }
   ],
   "main": "dist/httpsOrHttp.js",
+  "dependencies": {
+    "express": "4.15.3",
+    "flaschenpost": "0.15.6"
+  },
   "devDependencies": {
     "assertthat": "0.10.3",
     "roboter": "0.15.4",
