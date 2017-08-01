@@ -90,7 +90,11 @@ suite('httpsOrHttp', () => {
     assert.that(() => {
       const app = express();
 
-      httpsOrHttp({ app, certificate: path.join(__dirname, '..', 'certificates', 'localhost'), ports: { http: portHttp, https: portHttps }}, done);
+      httpsOrHttp({ app, certificate: path.join(__dirname, '..', 'certificates', 'localhost'), ports: { http: portHttp, https: portHttps }}, (err, result) => {
+        assert.that(err).is.null();
+        assert.that(result).is.equalTo({ app: { protocol: 'https', port: portHttps }, redirect: { protocol: 'http', port: portHttp }});
+        done();
+      });
     }).is.not.throwing();
   });
 
@@ -98,7 +102,11 @@ suite('httpsOrHttp', () => {
     assert.that(() => {
       const app = express();
 
-      httpsOrHttp({ app, certificate: path.join(__dirname, '..', 'certificates', 'empty'), ports: { http: portHttp, https: portHttps }}, done);
+      httpsOrHttp({ app, certificate: path.join(__dirname, '..', 'certificates', 'empty'), ports: { http: portHttp, https: portHttps }}, (err, result) => {
+        assert.that(err).is.null();
+        assert.that(result).is.equalTo({ app: { protocol: 'http', port: portHttp }});
+        done();
+      });
     }).is.not.throwing();
   });
 });

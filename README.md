@@ -13,7 +13,13 @@ Now you are able to create an HTTPS server or, if not possible, an HTTP server.
 
 ```javascript
 const app = express();
-const callback = function() {...};
+const callback = function(err, result) {
+  if (err) {
+    // ...
+  }
+
+  // ...
+};
 
 httpsOrHttpServer({
   app: app,
