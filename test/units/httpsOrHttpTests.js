@@ -3,11 +3,35 @@
 const path = require('path');
 
 const assert = require('assertthat'),
-      express = require('express');
+      express = require('express'),
+      freeport = require('freeport');
 
 const httpsOrHttp = require('../../lib/httpsOrHttp');
 
 suite('httpsOrHttp', () => {
+  let portHttp,
+      portHttps;
+
+  setup(done => {
+    freeport((errFirst, portFirst) => {
+      if (errFirst) {
+        throw errFirst;
+      }
+
+      portHttp = portFirst;
+
+      freeport((errSecond, portSecond) => {
+        if (errSecond) {
+          throw errSecond;
+        }
+
+        portHttps = portSecond;
+
+        done();
+      });
+    });
+  });
+
   test('is a function.', done => {
     assert.that(httpsOrHttp).is.ofType('function');
     done();
@@ -66,7 +90,7 @@ suite('httpsOrHttp', () => {
     assert.that(() => {
       const app = express();
 
-      httpsOrHttp({ app, certificate: path.join(__dirname, '..', 'certificates', 'localhost'), ports: { http: 8000, https: 9000 }}, done);
+      httpsOrHttp({ app, certificate: path.join(__dirname, '..', 'certificates', 'localhost'), ports: { http: portHttp, https: portHttps }}, done);
     }).is.not.throwing();
   });
 
@@ -74,7 +98,7 @@ suite('httpsOrHttp', () => {
     assert.that(() => {
       const app = express();
 
-      httpsOrHttp({ app, certificate: path.join(__dirname, '..', 'certificates', 'empty'), ports: { http: 8000, https: 9000 }}, done);
+      httpsOrHttp({ app, certificate: path.join(__dirname, '..', 'certificates', 'empty'), ports: { http: portHttp, https: portHttps }}, done);
     }).is.not.throwing();
   });
 });
