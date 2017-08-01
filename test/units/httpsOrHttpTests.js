@@ -37,10 +37,10 @@ suite('httpsOrHttp', () => {
     done();
   });
 
-  test('throws an error if options is missing.', done => {
+  test('throws an error if options are missing.', done => {
     assert.that(() => {
       httpsOrHttp();
-    }).is.throwing('Options is missing.');
+    }).is.throwing('Options are missing.');
     done();
   });
 
@@ -51,37 +51,37 @@ suite('httpsOrHttp', () => {
     done();
   });
 
-  test('throws an error if certificate is missing.', done => {
+  test('throws an error if certificate directory is missing.', done => {
     assert.that(() => {
       httpsOrHttp({ app: 'not-missing' });
-    }).is.throwing('Certificate is missing.');
+    }).is.throwing('Certificate directory is missing.');
     done();
   });
 
   test('throws an error if ports are missing.', done => {
     assert.that(() => {
-      httpsOrHttp({ certificate: 'not-missing', app: 'not-missing' });
+      httpsOrHttp({ certificateDirectory: 'not-missing', app: 'not-missing' });
     }).is.throwing('Ports are missing.');
     done();
   });
 
   test('throws an error if http port is missing.', done => {
     assert.that(() => {
-      httpsOrHttp({ certificate: 'not-missing', app: 'not-missing', ports: {}});
+      httpsOrHttp({ certificateDirectory: 'not-missing', app: 'not-missing', ports: {}});
     }).is.throwing('Http port is missing.');
     done();
   });
 
   test('throws an error if https port is missing.', done => {
     assert.that(() => {
-      httpsOrHttp({ certificate: 'not-missing', app: 'not-missing', ports: { http: 'not-missing' }});
+      httpsOrHttp({ certificateDirectory: 'not-missing', app: 'not-missing', ports: { http: 'not-missing' }});
     }).is.throwing('Https port is missing.');
     done();
   });
 
   test('throws an error if callback is missing.', done => {
     assert.that(() => {
-      httpsOrHttp({ certificate: 'not-missing', app: 'not-missing', ports: { http: 'not-missing', https: 'not-missing' }});
+      httpsOrHttp({ certificateDirectory: 'not-missing', app: 'not-missing', ports: { http: 'not-missing', https: 'not-missing' }});
     }).is.throwing('Callback is missing.');
     done();
   });
@@ -90,7 +90,7 @@ suite('httpsOrHttp', () => {
     assert.that(() => {
       const app = express();
 
-      httpsOrHttp({ app, certificate: path.join(__dirname, '..', 'certificates', 'localhost'), ports: { http: portHttp, https: portHttps }}, (err, result) => {
+      httpsOrHttp({ app, certificateDirectory: path.join(__dirname, '..', 'certificates', 'localhost'), ports: { http: portHttp, https: portHttps }}, (err, result) => {
         assert.that(err).is.null();
         assert.that(result).is.equalTo({ app: { protocol: 'https', port: portHttps }, redirect: { protocol: 'http', port: portHttp }});
         done();
@@ -102,7 +102,7 @@ suite('httpsOrHttp', () => {
     assert.that(() => {
       const app = express();
 
-      httpsOrHttp({ app, certificate: path.join(__dirname, '..', 'certificates', 'empty'), ports: { http: portHttp, https: portHttps }}, (err, result) => {
+      httpsOrHttp({ app, certificateDirectory: path.join(__dirname, '..', 'certificates', 'empty'), ports: { http: portHttp, https: portHttps }}, (err, result) => {
         assert.that(err).is.null();
         assert.that(result).is.equalTo({ app: { protocol: 'http', port: portHttp }});
         done();

@@ -1,34 +1,33 @@
 # https-or-http
 https-or-http runs an HTTPS server or, if not possible, an HTTP server.
 
-## Quick Start
+## Quick start
 
-First you need to add a reference to https-or-http to your application.
+First you need to add a reference to https-or-http to your application:
 
 ```javascript
 const httpsOrHttpServer = require('https-or-http');
 ```
 
-Now you are able to create an HTTPS server or, if not possible, an HTTP server.
+Now you are able to create an HTTPS server or, if not possible, an HTTP server:
 
 ```javascript
 const app = express();
-const callback = function(err, result) {
+
+httpsOrHttpServer({
+  app,
+  certificateDirectory: '/...',
+  ports: {
+    https: 8000,
+    http: 9000
+  }
+}, function (err, result) {
   if (err) {
     // ...
   }
 
   // ...
-};
-
-httpsOrHttpServer({
-  app: app,
-  certificate: '/...',
-  ports: {
-    https: 8000,
-    http: 9000
-  }
-}, callback);
+});
 ```
 
 *Please note that the directory must contain a `certificate.pem` and a `privateKey.pem` file, otherwise an HTTP server will be started*
