@@ -6,31 +6,29 @@ https-or-http runs an HTTPS server or, if not possible, an HTTP server.
 First you need to add a reference to https-or-http to your application:
 
 ```javascript
-const httpsOrHttpServer = require('https-or-http');
+const httpsOrHttp = require('https-or-http');
 ```
 
-Now you are able to create an HTTPS server or, if not possible, an HTTP server:
+Then use the `httpsOrHttp` function to run an HTTPS server. You need to provide an Express application, a directory that contains a certificate and a private key, and the ports to be used. If the HTTPS could not be started, e.g. because there is no certificate or no private key, an HTTP server is started as fallback.
+
+*Please note that the directory must contain a `certificate.pem` and a `privateKey.pem` file, otherwise an HTTP server will be started.*
+
+As a result you get an object that describes the servers that have been started:
 
 ```javascript
 const app = express();
 
-httpsOrHttpServer({
+httpsOrHttp({
   app,
   certificateDirectory: '/...',
   ports: {
     https: 8000,
     http: 9000
   }
-}, function (err, result) {
-  if (err) {
-    // ...
-  }
-
+}, (err, servers) => {
   // ...
 });
 ```
-
-*Please note that the directory must contain a `certificate.pem` and a `privateKey.pem` file, otherwise an HTTP server will be started*
 
 ## Running the build
 
