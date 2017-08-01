@@ -1,6 +1,6 @@
 {
   "name": "https-or-http",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Runs an HTTPS server or, if not possible, an HTTP server.",
   "contributors": [
     {
