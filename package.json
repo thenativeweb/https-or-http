@@ -15,7 +15,8 @@
   "main": "dist/httpsOrHttp.js",
   "dependencies": {
     "express": "4.15.3",
-    "flaschenpost": "0.15.6"
+    "flaschenpost": "0.15.6",
+    "get-certificate": "0.1.0"
   },
   "devDependencies": {
     "assertthat": "0.10.3",

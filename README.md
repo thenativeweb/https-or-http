@@ -1,10 +1,44 @@
 # https-or-http
 https-or-http runs an HTTPS server or, if not possible, an HTTP server.
 
+## Quick Start
+
+First you need to add a reference to https-or-http to your application.
+
+```javascript
+const httpsOrHttpServer = require('https-or-http');
+```
+
+Now you are able to create an HTTPS server or, if not possible, an HTTP server.
+
+```javascript
+const app = express();
+const callback = function() {...};
+
+httpsOrHttpServer({
+  app: app,
+  certificate: '/...',
+  ports: {
+    https: 8000,
+    http: 9000
+  }
+}, callback);
+```
+
+*Please note that the directory must contain a `certificate.pem` and a `privateKey.pem` file, otherwise an HTTP server will be started*
+
+## Running the build
+
+To build this module use [roboter](https://www.npmjs.com/package/roboter).
+
+```bash
+$ bot
+```
+
 ## License
 
 The MIT License (MIT)
-Copyright (c) 2011-2017 the native web. All rights reserved.
+Copyright (c) 2017 the native web. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

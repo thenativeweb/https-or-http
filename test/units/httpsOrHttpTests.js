@@ -1,6 +1,9 @@
 'use strict';
 
-const assert = require('assertthat');
+const path = require('path');
+
+const assert = require('assertthat'),
+      express = require('express');
 
 const httpsOrHttp = require('../../lib/httpsOrHttp');
 
@@ -31,10 +34,10 @@ suite('httpsOrHttp', () => {
     done();
   });
 
-  test('throws an error if ports is missing.', done => {
+  test('throws an error if ports are missing.', done => {
     assert.that(() => {
       httpsOrHttp({ certificate: 'not-missing', app: 'not-missing' });
-    }).is.throwing('Ports is missing.');
+    }).is.throwing('Ports are missing.');
     done();
   });
 
@@ -57,5 +60,21 @@ suite('httpsOrHttp', () => {
       httpsOrHttp({ certificate: 'not-missing', app: 'not-missing', ports: { http: 'not-missing', https: 'not-missing' }});
     }).is.throwing('Callback is missing.');
     done();
+  });
+
+  test('check if callback for HTTPS server called.', done => {
+    assert.that(() => {
+      const app = express();
+
+      httpsOrHttp({ app, certificate: path.join(__dirname, '..', 'certificates', 'localhost'), ports: { http: 8000, https: 9000 }}, done);
+    }).is.not.throwing();
+  });
+
+  test('check if callback for HTTP server called.', done => {
+    assert.that(() => {
+      const app = express();
+
+      httpsOrHttp({ app, certificate: path.join(__dirname, '..', 'certificates', 'empty'), ports: { http: 8000, https: 9000 }}, done);
+    }).is.not.throwing();
   });
 });
