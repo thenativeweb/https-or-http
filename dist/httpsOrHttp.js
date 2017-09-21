@@ -1,7 +1,8 @@
 'use strict';
 
-var http = require('http'),
-    https = require('https');
+var http = require('http');
+
+var spdy = require('spdy');
 
 var express = require('express'),
     getCertificate = require('get-certificate');
@@ -38,7 +39,7 @@ var httpsOrHttp = function httpsOrHttp(options, callback) {
   }
 
   if (certificate) {
-    https.createServer({ key: certificate.privateKey, cert: certificate.certificate }, options.app).listen(options.ports.https, function () {
+    spdy.createServer({ key: certificate.privateKey, cert: certificate.certificate }, options.app).listen(options.ports.https, function () {
       var redirectApp = express();
 
       redirectApp.get(/.*/, function (req, res) {
