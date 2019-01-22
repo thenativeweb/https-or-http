@@ -6,7 +6,7 @@ const assert = require('assertthat'),
       express = require('express'),
       freeport = require('freeport');
 
-const httpsOrHttp = require('../../lib/httpsOrHttp');
+const httpsOrHttp = require('../../src/httpsOrHttp');
 
 suite('httpsOrHttp', () => {
   let portHttp,
@@ -90,7 +90,7 @@ suite('httpsOrHttp', () => {
     assert.that(() => {
       const app = express();
 
-      httpsOrHttp({ app, certificateDirectory: path.join(__dirname, '..', 'certificates', 'localhost'), ports: { http: portHttp, https: portHttps }}, (err, result) => {
+      httpsOrHttp({ app, certificateDirectory: path.join(__dirname, '..', 'shared', 'certificates', 'localhost'), ports: { http: portHttp, https: portHttps }}, (err, result) => {
         assert.that(err).is.null();
         assert.that(result).is.equalTo({ app: { protocol: 'https', port: portHttps }, redirect: { protocol: 'http', port: portHttp }});
         done();
@@ -102,7 +102,7 @@ suite('httpsOrHttp', () => {
     assert.that(() => {
       const app = express();
 
-      httpsOrHttp({ app, certificateDirectory: path.join(__dirname, '..', 'certificates', 'empty'), ports: { http: portHttp, https: portHttps }}, (err, result) => {
+      httpsOrHttp({ app, certificateDirectory: path.join(__dirname, '..', 'shared', 'certificates', 'empty'), ports: { http: portHttp, https: portHttps }}, (err, result) => {
         assert.that(err).is.null();
         assert.that(result).is.equalTo({ app: { protocol: 'http', port: portHttp }});
         done();

@@ -14,15 +14,14 @@
   ],
   "main": "dist/httpsOrHttp.js",
   "dependencies": {
-    "express": "4.15.4",
+    "express": "4.16.4",
     "get-certificate": "0.1.0",
-    "spdy": "3.4.7"
+    "spdy": "4.0.0"
   },
   "devDependencies": {
-    "assertthat": "0.10.3",
+    "assertthat": "2.0.1",
     "freeport": "1.0.5",
-    "roboter": "0.15.4",
-    "roboter-server": "0.15.4"
+    "roboter": "3.0.4"
   },
   "repository": {
     "type": "git",
